@@ -1,0 +1,7 @@
+- PostgresSQL:
+    - Open Source 
+        - Gratuito, sem necessidade de licença
+    - Possui tipos complexos que podem ser armazenados dentro dele
+    - Possui características de cliente (pgadmin) e servidor (PostgresSQL)
+    - Consultas muito complexas podem onerar o banco de dados
+    - Tente trazer o menor número possível de dados para onerar menos o banco 
