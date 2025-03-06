@@ -1,0 +1,35 @@
+- SQL
+    - Dividido em conjuntos de comandos:
+        - Por questões de permissões de usuários ou responsabilidades
+        - DQL, DDL, DML, DCL, TCL.
+        
+        - DQL: Data Query Language
+            - SELECT
+            - Analista, cientista, PO, ...
+        - DML: Data Manipulation Language
+            - INSERT, UPDATE, DELETE
+            - Sistemas que tem acesso (CRUD), Engenheiros
+        - DDL: Data Definition Language 
+            - CREATE, ALTER, DROP
+            - DBA 
+            - Modela o banco e cria o schema
+        - DCL: Data Control Language
+            - GRANT, REVOKE
+            - Admin banco
+            - Tira conta, deleta conta
+        - DTL: Transaction Control Language
+            - BEGIN, COMMIT, ROLLBACK
+            - Desenvolvedores, DBA, ...
+            - Conjunto de comandos
+
+- SELECT * FROM schema.tabela
+- O excel tem um limite de linhas por sempre trazer tudo, semelhante a um SELECT * FROM 
+    - O que pode pesar no banco
+    - Objetivo é sempre diminuir as consultas 
+
+Ordem de execução: FROM --> WHERE --> GROUP BY --> HAVING --> SELECT --> ORDER BY
+Ordem de escrita: SELECT --> FROM --> WHERE --> GROUP BY --> HAVING --> ORDER BY
+
+O SQL é uma linguagem padrão com os comandos mínimos, mas que tem funções específicas de cada sistema
+
+
