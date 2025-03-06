@@ -1,0 +1,15 @@
+Join:
+    - Semelhante a um procv que traz a informação de uma tabela para outra
+    - Traz o que tem em comum entre as tabelas 
+    
+    - Muito utilizado em tabelas normalizadas
+        - Quando normaliza a tabela é feito semelhante a um distinct das dimensões
+    
+    - A tabela desnormalizada salva todas as informações em uma tabela só
+    - Normalizar depende muito da situação, é uma discussão semelhante a de mono e multi repositório
+    
+    - Primary e foreign key
+        - A chave primária (primary key) é a chave que identifica um único registro da tabela
+        - A chave estrangeira (foreign key) é a chave que identifica uma chave primária em outra tabela e que se repete na tabela usada
+    
+    - Normalmente no join são feitos com chave primária e estrangeira, mas não necessariamente
