@@ -1,0 +1,3 @@
+- Windows function:
+    - O windows function ele mantém a mesma quantidade de linhas anterior, diferente de agregações com group by. Geralmente faz isso adicionando colunas
+    - 
