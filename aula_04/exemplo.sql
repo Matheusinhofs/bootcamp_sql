@@ -1,3 +1,10 @@
+-- 6. Obter todos os pedidos feitos em 19 de maio de 1997
+select * from orders o 
+where o.order_date = '19/05/1997'
+
+
+select * from order_details od limit 10
+
 select 
 	od.order_id,
 	count(distinct od.product_id) as valor_unique_product,
@@ -62,3 +69,57 @@ from order_details od
 join products p on p.product_id = od.product_id
 order by rankk
 
+
+
+-- Percent_rank(): Calcula o rank relativo de uma linha específica dentro do conjunto de resultados como uma porcentagem.
+-- Fórmula: PERCENT_RANK = (RANK - 1) / (N - 1)
+
+-- Cume_dist(): Calcula a distribuição acumulada de um valor no conjunto de resultados. Representa a proporção de linhas que são menores ou iguais à linha atual.
+-- Fórmula: CUME_DIST = (Número de linhas com valores <= linha atual) / (Número total de linhas)
+
+-- ambos retornam valores entre 0 e 1
+
+SELECT  
+  order_id, 
+  unit_price * quantity AS total_sale,
+  ROUND(CAST(PERCENT_RANK() OVER (PARTITION BY order_id 
+    ORDER BY (unit_price * quantity) DESC) AS numeric), 2) AS order_percent_rank,
+  ROUND(CAST(CUME_DIST() OVER (PARTITION BY order_id 
+    ORDER BY (unit_price * quantity) DESC) AS numeric), 2) AS order_cume_dist
+FROM  
+  order_details;
+
+
+-- NTILE(n): fala como vai particionar os grupos, divide em partes iguais ou aproximadamente iguais
+-- NTILE(n) OVER (ORDER BY coluna)
+-- n: O número de faixas ou grupos que você deseja criar.
+-- ORDER BY coluna: A coluna pela qual você deseja ordenar o conjunto de resultados antes de aplicar a função NTILE()
+-- todos esses grupos são de rankings
+
+SELECT first_name, last_name, title,
+   NTILE(3) OVER (ORDER BY first_name) AS group_number
+FROM employees;
+
+
+
+-- LAG(), LEAD()
+-- LAG(): Permite acessar o valor da linha anterior dentro de um conjunto de resultados. Isso é particularmente útil para fazer comparações com a linha atual ou identificar tendências ao longo do tempo.
+-- LEAD(): Permite acessar o valor da próxima linha dentro de um conjunto de resultados, possibilitando comparações com a linha subsequente.
+
+-- comparação de resultados normalmente vai usar o lag ou o lead
+-- o lag vai traz quanto vendeu no dia anterior e o lead traz o do próximo dia 
+
+SELECT 
+  customer_id, 
+  TO_CHAR(order_date, 'YYYY-MM-DD') AS order_date, 
+  shippers.company_name AS shipper_name, 
+  LAG(freight) OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS previous_order_freight, 
+  freight AS order_freight, 
+  LEAD(freight) OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS next_order_freight
+FROM 
+  orders
+JOIN 
+  shippers ON shippers.shipper_id = orders.ship_via;
+
+
+-- Having: filtra os dados através de uma conta matemática, como por exemplo soma, medidas e etc
