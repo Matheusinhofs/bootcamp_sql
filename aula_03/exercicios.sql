@@ -1,6 +1,17 @@
 -- 1. Cria um relatório para todos os pedidos de 1996 e seus clientes (152 linhas)
+select * from orders o 
+inner join customers c on o.customer_id = c.customer_id   
+where extract(year from o.order_date) = 1996
 
 -- 2. Cria um relatório que mostra o número de funcionários e clientes de cada cidade que tem funcionários (5 linhas)
+select 
+	count(distinct e.employee_id),
+	count(distinct c.customer_id),
+	e.city 
+from employees e 
+left join customers c on e.city = c.city
+where e.employee_id is not null 
+group by e.city
 
 -- 3. Cria um relatório que mostra o número de funcionários e clientes de cada cidade que tem clientes (69 linhas)
 
