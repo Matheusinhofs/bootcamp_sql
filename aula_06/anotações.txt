@@ -1,0 +1,136 @@
+- CTE(Common Table Expressions), Subqueries, View, Temporary Tables, Materialized Views
+
+- Subqueries:
+    - Muito utilizado para filtros, análises dinâmicas e etc;
+    - Normalmente utilizado com um SELECT dentro de outro;
+    - Gera uma tabela dentro de outra
+    - Com um nível ele funciona melhor para entendimento, muitos níveis já gera maior dificuldade de entendimento
+    - No entanto, com muitas subqueries pode se tornar muito difícil e complexo de entender o que foi feito
+    - Exemplo:
+
+SELECT SUM((order_details.unit_price) * order_details.quantity * (1.0 - order_details.discount)) AS total_revenues_1997
+FROM order_details
+INNER JOIN (
+    SELECT order_id 
+    FROM orders 
+    WHERE EXTRACT(YEAR FROM order_date) = '1997'
+) AS ord 
+ON ord.order_id = order_details.order_id;
+
+
+- CTE
+    - Traz resultado semelhante ao de subqueries mas criando uma divisão e nomeando as CTEs
+    - A CTE possui o with para abertura de um contexto, em seguida o AS e entre parênteses a query
+    - Bancos antigos e em versões antigas não trabalham bem com CTEs, pois perdem o index 
+    - CTE recursiva usa uma cadeia de produtos
+    - Exemplo:
+
+with ReceitasMensais as (
+	select 
+		extract(year from o.order_date) as Ano,
+		extract(month from o.order_date) as Mes, 
+		sum((od.unit_price * od.quantity) * (1-od.discount)) as receita
+	from order_details od 
+	inner join orders o on od.order_id = o.order_id  
+	group by Ano, Mes
+),
+	ReceitasMensaisYTD as (
+	select 
+		Ano,
+		Mes,
+		receita,
+		SUM(receita) over (partition by Ano order by Mes) as Receita_YTD
+	from ReceitasMensais
+	)
+
+
+- View 
+    - Tanto a view, quanto a CTE e a subquery tem a mesma performance 
+    - Todos eles ficam na memória e não no banco, mas a view tem os metadados gravados
+    - Vantagem é que pode reutilizar a query toda hora, e ela permanece gravada se fecha a sessão
+    - Outros podem usar essa view
+    - Pode gerar index e grant(criando ordens de acesso)
+        - GRANT SELECT ON TotalRevenues TO user1;
+        - Pode criar grupos de acesso
+    - A view pode ser chamada em outros lugares, com outras queries, não precisando estar no mesmo contexto
+    - Exemplo:
+
+CREATE VIEW TotalRevenues AS
+SELECT 
+    customers.company_name, 
+    SUM(order_details.unit_price * order_details.quantity * (1.0 - order_details.discount)) AS total
+FROM customers
+INNER JOIN orders ON customers.customer_id = orders.customer_id
+INNER JOIN order_details ON order_details.order_id = orders.order_id
+GROUP BY customers.company_name;
+
+SELECT * FROM TotalRevenues;
+
+GRANT SELECT ON TotalRevenues TO user1;
+
+
+- Temporary Tables/Staging/Testes ETL
+    - Tudo que é temp ele funciona até fechar a sessão
+    - Só dura o tempo de sessão
+    - Grava o resultado, sem necessidade de ficar recalculando depois
+    - Muito útil se for utilizar uma query que demora mais tempo e são feitos testes na sessão
+    - Exemplo:
+
+CREATE TEMP TABLE TempTotalRevenues AS
+SELECT 
+    customers.company_name, 
+    SUM(order_details.unit_price * order_details.quantity * (1.0 - order_details.discount)) AS total
+FROM customers
+INNER JOIN orders ON customers.customer_id = orders.customer_id
+INNER JOIN order_details ON order_details.order_id = orders.order_id
+GROUP BY customers.company_name;
+
+SELECT * FROM TempTotalRevenues;
+
+
+- Materialized Views / Snapshot
+    - Armazena os resultados de uma consulta como uma tabela física.
+    - Não dura tempo de sessão
+    - Outras pessoas conseguem acessar ela
+    - Esta aloca espaço no banco, melhorando significativamente o desempenho em consultas subsequentes 
+    - Não consegue fazer alterações na tabela
+    - Ela não é atualizada de forma automática, exige comando refresh
+    - É semelhante a uma foto do momento do banco por meio da Snapshot
+        - Interessante em auditorias
+    - Exemplo:
+
+CREATE MATERIALIZED VIEW MaterializedTotalRevenues AS
+SELECT 
+    customers.company_name, 
+    SUM(order_details.unit_price * order_details.quantity * (1.0 - order_details.discount)) AS total
+FROM customers
+INNER JOIN orders ON customers.customer_id = orders.customer_id
+INNER JOIN order_details ON order_details.order_id = orders.order_id
+GROUP BY customers.company_name;
+
+SELECT * FROM MaterializedTotalRevenues;
+
+
+- Postegre tem o VACUUM para eliminar o que foi deletado mas que ocupa espaço
+
+Materialized view vs Table
+
+Armazenamento de Dados:
+Tabela Normal: Armazena dados fisicamente no banco de dados.
+Materialized View: Armazena os resultados de uma consulta como uma tabela física.
+
+Atualização Automática:
+Tabela Normal: Os dados são atualizados manual ou automaticamente através de operações de inserção, atualização e exclusão.
+Materialized View: Os dados não são atualizados automaticamente. Eles precisam ser atualizados manualmente usando o comando REFRESH MATERIALIZED VIEW.
+
+Desempenho:
+Tabela Normal: As consultas são executadas diretamente nos dados armazenados na tabela.
+Materialized View: As consultas são executadas nos dados armazenados na materialized view, o que pode melhorar o desempenho de consultas complexas ou frequentemente usadas.
+
+Uso de Espaço em Disco:
+Tabela Normal: Pode ocupar mais espaço em disco devido ao armazenamento físico de dados.
+Materialized View: Pode ocupar menos espaço em disco, pois armazena apenas os resultados da consulta, não os dados brutos.
+
+Flexibilidade:
+Tabela Normal: Os dados são atualizados em tempo real e podem ser manipulados diretamente.
+Materialized View: Os resultados da consulta são estáticos e precisam ser atualizados manualmente. Eles são usados principalmente para armazenar resultados de consultas complexas que não mudam com frequência.
