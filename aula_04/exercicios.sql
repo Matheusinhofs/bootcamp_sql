@@ -4,6 +4,8 @@
 -- Listar funcionários dividindo-os em 3 grupos usando NTILE
 -- FROM employees;
 
+
+
 -- Ordenando os custos de envio pagos pelos clientes de acordo 
 -- com suas datas de pedido, mostrando o custo anterior e o custo posterior usando LAG e LEAD:
 -- FROM orders JOIN shippers ON shippers.shipper_id = orders.ship_via;
