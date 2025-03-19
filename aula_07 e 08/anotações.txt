@@ -1,0 +1,35 @@
+- Stored Procedures
+    - A store procedure, diferente das funções no python, elas não geram retornos
+    - Elas tem entradas, tasks com alterações mas sem saídas
+    - Pode alterar uma tabela, gerar um novo valor
+    - O próprio contexto dela é modificado
+
+Resumo da aula:
+Stored Procedures vs Views
+As Views e Stored Procedures são ambos recursos poderosos em bancos de dados relacionais, mas têm propósitos e funcionalidades distintas.
+
+Views:
+
+As Views são abstrações de consulta que permitem aos usuários definir consultas complexas e frequentemente usadas como uma única entidade.
+Elas são essencialmente consultas SQL pré-definidas que são armazenadas no banco de dados e tratadas como tabelas virtuais.
+As Views simplificam o acesso aos dados, ocultando a complexidade das consultas subjacentes e fornecendo uma interface consistente para os usuários.
+Elas são úteis para simplificar consultas frequentes, segmentar permissões de acesso aos dados e abstrair a complexidade do modelo de dados subjacente.
+Stored Procedures:
+
+As Stored Procedures são abstrações de transações que consistem em um conjunto de instruções SQL pré-compiladas e armazenadas no banco de dados.
+Elas são usadas para encapsular operações de banco de dados mais complexas, como atualizações, inserções, exclusões e outras transações.
+As Stored Procedures podem aceitar parâmetros de entrada e retornar valores de saída, o que as torna altamente flexíveis e reutilizáveis em diferentes partes de um aplicativo.
+Elas oferecem maior controle sobre as operações de banco de dados e permitem a execução de lógica de negócios no lado do servidor.
+
+Stored Procedures são rotinas armazenadas no banco de dados que contêm uma série de instruções SQL e podem ser executadas por aplicativos ou usuários conectados ao banco de dados. Elas oferecem várias vantagens, como:
+
+Reutilização de código: As stored procedures permitem que blocos de código SQL sejam escritos uma vez e reutilizados em várias partes do aplicativo.
+
+Desempenho: Por serem compiladas e armazenadas no banco de dados, as stored procedures podem ser executadas de forma mais eficiente do que várias consultas SQL enviadas separadamente pelo aplicativo.
+
+Segurança: As stored procedures podem ajudar a proteger o banco de dados, pois os aplicativos só precisam de permissão para executar a stored procedure, não para acessar diretamente as tabelas.
+
+Abstração de dados: Elas podem ser usadas para ocultar a complexidade do modelo de dados subjacente, fornecendo uma interface simplificada para os usuários ou aplicativos.
+
+Controle de transações: As stored procedures podem incluir instruções de controle de transações para garantir a integridade dos dados durante operações complexas.
+
