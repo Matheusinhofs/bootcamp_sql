@@ -1,0 +1,4 @@
+- Trigger:
+    - É criar um gatilho para executar sequências de comandos
+        - Ex: ao realizar um update no banco ele executa um comando de modificar outra tabela
+    -  
