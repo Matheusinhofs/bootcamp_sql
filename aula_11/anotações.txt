@@ -1,0 +1,15 @@
+- Performance Tunnig em SQL
+    - A ordem de execução da query é difente da escrita
+    - Tem a relação de cliente e servidor
+        - Em que executa vários passos desde executar o comando até retornar os dados
+        - As vezes o problema pode estar na rede e não somente no processamento dos dados
+    - Possui protocolo ODBC 
+    - O limit ele não influencia no processamento, mas na hora de renderizar ajuda já 
+    - Ao realizar o processamento no servidor, o comando SQL passa por etapas antes de executar a query
+        - Análise sintática: verificar se o comando esta correto
+        - Análise semântica: verificar se o que foi solicitado existe no banco
+        - Shared Pool Check: -> Soft Parse(Oracle): Cache explícito que retorna o que já foi executado
+        - Otimização: planeja o que vai executar, analisando os recursos disponíveis
+            - O LIMIT pode vir antes no plano de processo de otimização do Postgres com o Seq Scan
+            - O DuckDB e o PySpark possuem esta etapa de otimização, planejando os comandos que devem ser executados primeiro
+        - Geração de origem de linha: ordem de execução que será feito
