@@ -1,0 +1,22 @@
+- Transações ACID
+    - ACID -> Atomicidade, consistência, isolamento e durabilidade
+    - Transações: começa com o BEGIN, pode ir pro COMMIT ou ROLLBACK
+    - Ele pode fazer um autocommit 
+    - Sem o commit ele não salva as novas transações do script
+    - Normalmente transações são usadas para modificar dados, mas pode ter só pra leitura
+    - Uma ou mais queries que funcionam, se não funcionar ele já anula a transação
+    - Transação é uma unidade de trabalho indivisível
+        - Ou ela funciona e da um commit, ou da um rollback
+    - Rollback retorna tudo que havia antes do begin
+    - Commit é semelhante ao commit do Git
+    - Isolation é pra uma transação não afetar outra
+        - Pode ter vários níveis de isolamento
+            - Read Uncommitted -> lê o que não teve commit
+            - Read committed -> padrão que executa normalmente
+            - Repeatable Read -> ele grava o momento de execução, sem permitir que outra transação altere essa
+            - Serializable -> processo síncrono, mas menos performático
+    - Consistency: garante que ele vai verificar constrain, trigger,... para então executar a transação
+        - Se tiver um excesso de requisições, talvez seja necessário um programa de fila como o Kafka
+        - O NoSQL tem uma certa vantagem por não pensar tanto na consistência, em casos que não precisa da consistência
+        - Tem um arquivo de log para verificar com os dados 
+    - Durability: garante que o dado vai permanecer no banco     
