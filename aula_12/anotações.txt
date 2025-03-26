@@ -1,0 +1,19 @@
+- Index
+    - Índices em bancos de dados são estruturas utilizadas para melhorar a eficiência de consultas, permitindo acesso rápido aos dados
+    - Em volumes maiores o index acaba impactando mais
+    - Mais fácil para inserir um valor, mais difícil para "selecionar" um valor
+    - Mais difícil para inserir um valor, mais fácil para "selecionar" um valor
+        - Dessa forma o B-tree resolve esse "problema"
+            - Uma B-Tree é uma árvore balanceada que é frequentemente usada em bancos de dados e sistemas de arquivos.
+            - Ela é projetada para permitir inserções, exclusões e pesquisas eficientes em grandes conjuntos de dados, mantendo a árvore balanceada e otimizando a profundidade da árvore.
+            - Pode ser utilizado em python 
+            - Ele faz uma comparação e ordena a cada entrada de dados
+            - O B-tree ele cria uma estrutura de chave indexando o valor
+    - O index no SQL ele cria uma estrutura de chave e valor ordenada por B-tree
+        - Faz uma relação de-para com a relação de chave e valor 
+    - No fim o index procura essa chave na tabela que estão os dados
+    - Toda vez que cria uma estrutura com primary key e foreign key já utiliza index de forma natural
+    - Postgres realiza a consulta com o index only scan, sem necessidade de buscar na tabela, utilizando só a relação dele com o índice 
+    - As vantagens dos índices incluem consultas mais rápidas e eficientes
+    - As desvantagens incluem custo adicional de armazenamento e sobrecarga de atualização durante operações de inserção, atualização e exclusão.
+    - Verificar onde mais se utiliza where, order by, group by
