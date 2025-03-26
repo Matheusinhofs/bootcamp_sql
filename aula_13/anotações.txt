@@ -1,0 +1,10 @@
+- Database Partition 
+    - Ideia do partition é dividir em partições, como por exemplo em várias tabelas
+    - O index trabalha como log(n), reduzindo o tempo de query de forma exponensial
+    - Tipos de particionamento
+        - Data
+        - Valores (Estados, Países, Zipcode, etc)
+        - ID
+    - Na partição ele cria tabelas menores, em que quando realiza o where pela partição ele reduz consideravelmente o tempo de query
+    - Sharding -> A Amazon, na AWS, quando é feito o particionamento por região ela aloca essas tabelas em locais próximos de onde o dado representa
+    - 
