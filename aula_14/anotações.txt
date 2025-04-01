@@ -1,0 +1,34 @@
+- Modern Data Stack
+    - SQL, Airbyte, DBT-Cloud, Airflow
+    - Marc Lambert como convidado
+    - Como airflow ajuda no dia a dia:
+        - Para agendar tarefas
+        - Gerenciar automações
+        - Permite escalar as automações
+        - Baseado em python, não sendo difícil de aplicá-lo e migrar para o airflow
+        - Dicas para um engenheiro de dados que esta começando:
+            - Criar projetos que vê valor e funciona no mundo real
+            - Ter prática com coisas mais concretas para um engenheiro de dados
+            - Não caia no hype que sempre existe 
+            - Aprenda bem os fundamentos
+            - Faça perguntas 
+            - Veja o que as vagas pedem e escolha as tecnologias 
+        - Uma dag do airflow é uma sequência de tarefas que possuem dependências e uma ordem de execução, como uma pipeline
+        0->0->0->0->0
+
+        - Pode utilizar como decoradores no script
+        - Uma orquestração é como a forma que vai executar os pipelines no airflow
+        - Pode gerar ações baseadas em alterações de um dataset, como uma trigger 
+    - Airbyte 
+        - Solução moderna de integração de dados
+        - Tem outras ferramentas como o pentaho por exemplo
+        - Traz todas as fontes de dados 
+        - O airbyte ele roda local de graça mas a cloud deles é paga
+    - A partir da integração do airbyte ele joga os dados para um DW com o Postgres(criado no Render)
+    - DBT: 
+        - Serve para fazer as transformações de dados
+        - Faz uma abstração dos códigos de SQL
+        - Ferramenta moderna de dados
+        - Tem várias soluções para teste, documentação, snapshots, versionamento e deploy
+        - 
+        
